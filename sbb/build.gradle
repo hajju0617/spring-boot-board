@@ -30,6 +30,9 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	// JPA (implementation : 해당 라이브러리가 변경되더라도 이 라이브러리와 연관된 모든 모듈을 컴파일하지 않고 변경된 내용, 관련이 있는 모듈만 컴파일해서 리빌드하는 속도가 빠름)
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// JUnit (testRuntimeOnly : 테스트 실행 시에만 사용됨)
+	testImplementation 'org.junit.jupiter:junit-jupiter' 
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {

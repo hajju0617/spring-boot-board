@@ -3,5 +3,15 @@
 ---
 
 # Project
-- JDK : 21
+- Back-end
+  - JDK : 21
+  - Spring boot : 3.4.0
+  - JUnit5
+  - JPA
+  - Gradle
+- Front-end
+  - Thymeleaf
+  - Bootstrap
+- DB
+  - H2
 - IDE : STS

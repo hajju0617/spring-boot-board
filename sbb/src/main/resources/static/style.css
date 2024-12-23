@@ -1,0 +1,8 @@
+/*  답변 작성하는 텍스트 창 넓이 설정  */
+textarea {
+	width:100%;
+}
+/*  버튼 상단의 여백 설정.  */
+input[type=submit] {
+	margin-top:10px;
+}

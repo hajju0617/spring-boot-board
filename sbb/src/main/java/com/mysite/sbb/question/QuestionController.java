@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/question")
-@Controller		// 컨트롤러 선언.
-@RequiredArgsConstructor	// final이 붙은 속성을 포함하는 생성자를 자동으로 만들어줌.
+@RequestMapping("/question")	// URL 프리픽스
+@Controller						// 컨트롤러 선언.
+@RequiredArgsConstructor		// final이 붙은 속성을 포함하는 생성자를 자동으로 만들어줌.
 public class QuestionController {
 	private final QuestionService questionService;
 	

@@ -19,7 +19,7 @@ public class AnswerController {
 	private final QuestionService questionService;
 	private final AnswerService answerService;
 	
-	@PostMapping(value = "/create/{id}")
+	@PostMapping("/create/{id}")
 	public String createAnswer(Model model, @PathVariable("id") Integer id, @RequestParam(value = "content") String content) {		// 답변 작성.
 		Question question = this.questionService.getQuestion(id);
 		this.answerService.create(question, content);

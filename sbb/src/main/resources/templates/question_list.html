@@ -1,8 +1,8 @@
-<!-- 템플릿에 bootstrap.min.css 파일 적용  -->
-<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<!--  layout 템플릿 상속 받음.  -->
+<html layout:decorate="~{layout}"
 
 <!--  글 목록  -->
-<div class="container my-3">
+<div layout:fragment="content" class="container my-3">
 	<table class="table">
 		<thead class="table-dark">
 			<tr>
@@ -26,4 +26,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<!--  질문 등록 버튼  -->
+	<a th:href="@{/question/create}" class="btn btn-primary">질문 등록</a>
 </div>
+</html>

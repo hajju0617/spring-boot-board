@@ -1,14 +1,19 @@
+<!--  layout 템플릿 상속 받음.  -->
 <html layout:decorate="~{layout}">
+	<!--  글 작성 페이지.  -->
 	<div layout:fragment="content" class="container">
 		<h5 class="my-3 border-bottom pb-2">질문 등록</h5>
-		<form th:action="@{/question/create}" method="post">
+		<form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+			<!--  @Valid 검증 실패 시 에러 메시지 (form_errors 템플릿 사용.)  -->
+			<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+			
 			<div class="mb-3">
 				<label for="subject" class="form-label">제목</label>
-				<input type="text" name="subject" id="subject" class="form-control">
+				<input type="text" th:field="*{subject}" id="subject" class="form-control">
 			</div>
 			<div class="mb-3">
 				<label for="content" class="form-label">내용</label>
-				<textarea name="content" id="content" class="form-control" rows="10"></textarea>
+				<textarea th:field="*{content}" id="content" class="form-control" rows="10"></textarea>
 			</div>
 			<input type="submit" value="저장" class="btn btn-primary my-2">
 		</form>

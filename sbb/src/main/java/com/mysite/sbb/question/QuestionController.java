@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysite.sbb.answer.AnswerForm;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -28,14 +30,14 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/detail/{id}")
-	public String detail(Model model, @PathVariable("id") Integer id) {		// 상세 페이지.
+	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {		// 상세 페이지.
 		Question question = this.questionService.getQuestion(id);
 		model.addAttribute("question", question);
 		return "question_detail";
 	}
 	
 	@GetMapping("/create")	
-	public String questionCreate() {		// 글 등록(작성) 버튼 클릭 시 호출.
+	public String questionCreate(QuestionForm questionForm) {		// 글 등록(작성) 버튼 클릭 시 호출.
 		return "question_form";
 	}
 	

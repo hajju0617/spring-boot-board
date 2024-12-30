@@ -2,6 +2,7 @@ package com.mysite.sbb.question;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,9 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.mysite.sbb.answer.AnswerForm;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -23,9 +22,12 @@ public class QuestionController {
 	private final QuestionService questionService;
 	
 	@GetMapping("/list")
-	public String list(Model model) {										// 글 목록.
-		List<Question> questionList = this.questionService.getList();
-		model.addAttribute("questionList", questionList);
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {	// 글 목록.
+//		if (page < 1) {
+//			throw new IllegalArgumentException("페이지는 1보다 커야됨.");
+//		}
+		Page<Question> paging = this.questionService.getList(page - 1);
+		model.addAttribute("paging", paging);						// Page 객체를 'paging'이름으로 모델에 저장.
 		return "question_list";
 	}
 	

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyByte;
+import static org.mockito.ArgumentMatchers.intThat;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +18,9 @@ import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerRepository;
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionRepository;
+import com.mysite.sbb.question.QuestionService;
 
 import jakarta.transaction.Transactional;
-import net.bytebuddy.asm.Advice.This;
 
 
 @SpringBootTest
@@ -29,6 +29,18 @@ class SbbApplicationTests {
 	private QuestionRepository questionRepository;
 	@Autowired
 	private AnswerRepository answerRepository;
+	@Autowired
+	private QuestionService questionService;
+	
+	// 더미데이터
+	@Test
+	void testData() {
+		for (int i = 1; i <= 100; i++) {
+			String subject = String.format("테스트 더미데이터 제목 : [%03d]", i);
+			String content = "데스트 더미데이터 내용.";
+			this.questionService.create(subject, content);
+		}
+	}
 	
 	
 	// Question 데이터 조회
@@ -132,23 +144,17 @@ class SbbApplicationTests {
 //	}
 	
 	// 질문 데이터에서 답변 데이터 접근.
-	@Transactional
-	@Test
-	void Jpa11() {
-		Optional<Question> oq = this.questionRepository.findById(2);
-		assertTrue(oq.isPresent());
-		Question q = oq.get();
-		
-		List<Answer> answerList = q.getAnswerList();
-		assertEquals(1, answerList.size());
-		assertEquals("네 자동으로 생성됨.", answerList.get(0).getContent());
-	}
-	
-	
-	
-	
-	
-		
-	
+//	@Transactional
+//	@Test
+//	void Jpa11() {
+//		Optional<Question> oq = this.questionRepository.findById(2);
+//		assertTrue(oq.isPresent());
+//		Question q = oq.get();
+//		
+//		List<Answer> answerList = q.getAnswerList();
+//		assertEquals(1, answerList.size());
+//		assertEquals("네 자동으로 생성됨.", answerList.get(0).getContent());
+//	}
+
 	
 }

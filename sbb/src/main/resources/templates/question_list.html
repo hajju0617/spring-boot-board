@@ -13,7 +13,7 @@
 		</thead>
 		<tbody>
 			<!--  자바의 foreach문과 비슷함.  -->
-			<tr th:each="question, loop : ${questionList}">
+			<tr th:each="question, loop : ${paging}">
 				<!--  loop.count는 questionList의 항목을 th:each로 반복할 때 현재의 순서를 나타냄.  -->
 				<td th:text="${loop.count}"></td>
 				<td>
@@ -26,6 +26,26 @@
 			</tr>
 		</tbody>
 	</table>
+	<!--  페이징 처리  -->
+	<div th:if="${!paging.isEmpty()}">
+		<ul class="pagination justify-content-center">
+			<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disables'">
+				<a class="page-link" th:href="@{|?page=${paging.number}|}">
+					<span>이전</span>
+				</a>
+			</li>
+			<li th:each="page: ${#numbers.sequence(1, paging.totalPages)}"
+				th:if="${page >= paging.number-4 and page <= paging.number+6}" 
+				th:classappend="${page == paging.number+1} ? 'active'"class="page-item">
+				<a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+			</li>
+			<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+				<a class="page-link" th:href="@{|?page=${paging.number+2}|}">
+					<span>다음</span>
+				</a>
+			</li>
+		</ul>
+	</div>
 	<!--  질문 등록 버튼  -->
 	<a th:href="@{/question/create}" class="btn btn-primary">질문 등록</a>
 </div>

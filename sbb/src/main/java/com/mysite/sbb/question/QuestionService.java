@@ -1,10 +1,18 @@
 package com.mysite.sbb.question;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import com.mysite.sbb.DataNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -12,11 +20,11 @@ import lombok.RequiredArgsConstructor;
 public class QuestionService {
 	private final QuestionRepository questionRepository;
 	
-	public List<Question> getList() {						// 글 목록.
-		return this.questionRepository.findAll();
-	}
+//	public List<Question> getList() {						// 글 목록.
+//		return this.questionRepository.findAll();
+//	}
 	
-	public Question getQuestion(Integer id) {				// 글 상세 조회.
+	public Question getQuestion(Integer id) {							// 글 상세 조회.
 		Optional<Question> question = this.questionRepository.findById(id);
 		if (question.isPresent()) {
 			return question.get();
@@ -25,11 +33,18 @@ public class QuestionService {
 		}
 	}
 	
-	public void create(String subject, String content) {
+	public void create(String subject, String content) {				// 글 작성.		
 		Question question = new Question();
 		question.setSubject(subject);
 		question.setContent(content);
 		question.setCreateDate(LocalDateTime.now());
 		this.questionRepository.save(question);
+	}
+	
+	public Page<Question> getList(int page) {							// 글 목록 조회.
+		List<Sort.Order> sorts = new ArrayList<>();
+		sorts.add(Sort.Order.desc("createDate"));			// Order by createDate DESC 역할.
+		Pageable pageable = PageRequest.of(page, 10);		// page : 조회할 페이지 번호, 10 : 한 페이지에 보여줄 데이터의 개수.
+		return this.questionRepository.findAll(pageable);
 	}
 }

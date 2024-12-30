@@ -1,0 +1,24 @@
+<!--  해당 코드를 하나의 조각(fragment)으로 정의, 내비게이션 바의 스타일과 레이아웃 설정.  -->
+<nav th:fragment="navbarFragment"
+	class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">Spring Boot Board</a>
+		<!--  화면크기에 따라 내비게이션 다르게 설정. (내비게이션 메뉴를 토글(toggle)하는 햄버거 버튼)  -->
+		<button class="navbar-toggler" type="button" 
+		data-bs-toggle="collapse" 
+		data-bs-target="#navbarSupportedContent" 
+		aria-controls="navbarSupportedContent" 
+		aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<!--  화면 크기에 따라 내비게이션 바의 노출을 관리. (네비게이션 메뉴)  -->
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<!--  메뉴 오른쪽, 왼쪽 여백 지정.  -->
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link" href="#">로그인</a>
+				</li>
+			</ul>
+		</div>				
+	</div>
+</nav>

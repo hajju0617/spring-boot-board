@@ -41,10 +41,10 @@ public class QuestionService {
 		this.questionRepository.save(question);
 	}
 	
-	public Page<Question> getList(int page) {							// 글 목록 조회.
+	public Page<Question> getList(int page) {								// 글 목록 조회.
 		List<Sort.Order> sorts = new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate"));			// Order by createDate DESC 역할.
-		Pageable pageable = PageRequest.of(page, 10);		// page : 조회할 페이지 번호, 10 : 한 페이지에 보여줄 데이터의 개수.
+		sorts.add(Sort.Order.desc("createDate"));							// Order by createDate DESC 역할.
+		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));		// page : 조회할 페이지 번호, 10 : 한 페이지에 보여줄 데이터의 개수.
 		return this.questionRepository.findAll(pageable);
 	}
 }

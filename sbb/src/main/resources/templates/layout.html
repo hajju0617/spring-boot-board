@@ -13,9 +13,11 @@
 	<body>
 		<!--  내비게이션 바(navbar.html)파일을 현재 위치로 교체(삽입).  -->
 		<nav th:replace="~{navbar :: navbarFragment}"></nav>
-		<!--  기본 템플릿 안에 삽입될 내용 Start -->
+		
+		<!--  layout 템플릿 안에 삽입될 내용 Start -->
 		<th:block layout:fragment="content"></th:block>
-		<!--  기본 템플릿 안에 삽입될 내용 End  -->
+		<!--  layout 템플릿 안에 삽입될 내용 End  -->
+		
 		<!--  Bootstrap JavaScript 파일 사용. (bootstrap.min.js)  -->
 		<script th:src="@{/bootstrap.min.js}"></script>
 	</body>

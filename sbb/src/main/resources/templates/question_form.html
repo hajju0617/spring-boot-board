@@ -1,6 +1,6 @@
 <!--  layout 템플릿 상속 받음.  -->
 <html layout:decorate="~{layout}">
-	<!--  글 작성 페이지.  -->
+	<!--  글 작성 페이지. (부모 템플릿(layout)의 th:block요소의 내용이 자식 템플릿(question_form)의 div 요소의 내용으로 교체.)  -->
 	<div layout:fragment="content" class="container">
 		<h5 class="my-3 border-bottom pb-2">질문 등록</h5>
 		<form th:action="@{/question/create}" th:object="${questionForm}" method="post">

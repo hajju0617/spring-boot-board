@@ -1,0 +1,33 @@
+<!--  layout 템플릿 상속 받음.  -->
+<html layout:decorate="~{layout}">
+	<!--  부모 템플릿(layout)의 th:block요소의 내용이 자식 템플릿(signup_form)의 div 요소의 내용으로 교체.  -->
+	<div layout:fragment="content" class="container my-3">
+		<div class="my-3" border-bottom>
+			<div>
+				<h4>회원가입</h4>
+			</div>
+		</div>
+		<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+				<!--  @Valid 검증 실패 시 에러 메시지 (form_errors 템플릿 사용.)  -->
+		        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+				
+		        <div class="mb-3">
+		            <label for="username" class="form-label">사용자ID</label>
+		            <input type="text" th:field="*{username}" class="form-control">
+		        </div>
+		        <div class="mb-3">
+		            <label for="password" class="form-label">비밀번호</label>
+		            <input type="password" th:field="*{password}" class="form-control">
+		        </div>
+		        <div class="mb-3">
+		            <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+		            <input type="password" th:field="*{confirmPassword}" class="form-control">
+		        </div>
+		        <div class="mb-3">
+		            <label for="email" class="form-label">이메일</label>
+		            <input type="email" th:field="*{email}" class="form-control">
+		        </div>
+		        <button type="submit" class="btn btn-primary">회원가입</button>
+		</form>
+	</div>
+</html>

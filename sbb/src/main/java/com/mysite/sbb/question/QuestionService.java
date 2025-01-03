@@ -27,6 +27,7 @@ public class QuestionService {
 	public Question getQuestion(Integer id) {							// 글 상세 조회.
 		Optional<Question> question = this.questionRepository.findById(id);
 		if (question.isPresent()) {
+			questionRepository.updateCountView(id);
 			return question.get();
 		} else {
 			throw new DataNotFoundException("question not found");

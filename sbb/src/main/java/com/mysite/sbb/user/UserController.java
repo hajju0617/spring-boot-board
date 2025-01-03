@@ -44,4 +44,9 @@ public class UserController {
 		}
 		return "redirect:/";
 	}
+	
+	@GetMapping("/login")
+	public String login() {												// 로그인을 위한 페이지.
+		return "/login_form";
+	}
 }

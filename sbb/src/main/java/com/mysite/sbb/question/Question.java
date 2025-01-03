@@ -30,6 +30,9 @@ public class Question {
 	@Column(columnDefinition = "TEXT")
 	private String content;
 	
+	@Column(columnDefinition = "integer default 0", nullable =  false)
+	private int countView;
+	
 	private LocalDateTime createDate;
 	
 	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)

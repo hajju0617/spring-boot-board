@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,8 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration					// 해당 파일이 스프링의 환경 설정 파일임을 선언.
-@EnableWebSecurity				// 모든 요청 URL이 시큐리티의 제어를 받도록 만듦.
+@Configuration										// 해당 파일이 스프링의 환경 설정 파일임을 선언.
+@EnableWebSecurity									// 모든 요청 URL이 시큐리티의 제어를 받도록 만듦.
+@EnableMethodSecurity(prePostEnabled = true)		// @PreAuthorize에노테이션이 정상적으로 동작할 수 있도록
 public class SecurityConfig {
 	
 	@Bean
@@ -32,7 +34,7 @@ public class SecurityConfig {
 						.loginPage("/user/login").defaultSuccessUrl("/"))		// .formLogin 메서드는 시큐리티의 로그인 설정을 담당.
 				
 				.logout((logout) -> logout										// logout() 메서드는 시큐리티의 로그아웃 설정을 담당.
-						.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/").invalidateHttpSession(true));
+						.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID"));
 		return httpSecurity.build();
 	}
 	

@@ -38,7 +38,7 @@ class SbbApplicationTests {
 		for (int i = 1; i <= 100; i++) {
 			String subject = String.format("테스트 더미데이터 제목 : [%03d]", i);
 			String content = "데스트 더미데이터 내용.";
-			this.questionService.create(subject, content);
+			this.questionService.create(subject, content, null);
 		}
 	}
 	

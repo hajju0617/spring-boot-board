@@ -9,8 +9,15 @@
         <div class="card-body">
 			<!--  style="white-space: pre-line -> 사용자가 입력한대로 줄 바꿈이 적용되도록 해줌. (CSS 속성)  -->
             <div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end">				
                 <div class="badge bg-light text-dark p-2 text-start">
+					<!--  글 작성자 표시  -->
+					<div class="mb-2">
+						<span th:if="${question.author != null}" th:text="${question.author.username}"></span>
+					</div>
+					<div class="mb-2">
+						<td>조회수: <span th:text="${question.countView}"></span></td>
+					</div>
                     <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
@@ -26,6 +33,10 @@
             <div class="card-text" style="white-space: pre-line;" th:text="${answer.content}"></div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
+					<!--  답변 작성자 표시  -->
+					<div class="mb-2">
+						<span th:if="${answer.author != null}" th:text="${answer.author.username}"></span>
+					</div>
                     <div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
@@ -37,8 +48,9 @@
     <form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
 		<!--  @Valid 검증 실패 시 에러 메시지 (form_errors 템플릿 사용.)  -->
 		<div th:replace="~{form_errors :: formErrorsFragment}"></div>
-		
-        <textarea th:field="*{content}" id="content" rows="10" class="form-control"></textarea>
+		<!--  로그아웃 상태에서는 답변 자체를 작성하지 못하고, 로그인 상태에서만 가능하도록 설정.  -->
+		<textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" rows="10"></textarea>
+		<textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
         <input type="submit" value="답변 등록" class="btn btn-primary my-2">
     </form>
 </div>

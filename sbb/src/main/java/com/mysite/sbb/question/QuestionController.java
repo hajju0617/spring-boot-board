@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
@@ -59,5 +62,44 @@ public class QuestionController {
 		SiteUser siteUser = this.userService.getUser(principal.getName());
 		this.questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		return "redirect:/question/list";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/modify/{id}")
+	public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {			// 수정 버튼 클릭 시 호출.
+		Question question = this.questionService.getQuestion(id);
+		if (!(question.getAuthor().getUsername().equals(principal.getName()))) {			// 로그인한 사용자와 글 작성자가 동일하지 않을 경우 예외처리.
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없음.");
+		}
+		questionForm.setSubject(question.getSubject());										// 수정할 데이터를 보여주기위해서. 즉 기존에 작성되어 있던 데이터 담은 것.
+		questionForm.setContent(question.getContent());
+		return "question_form";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/modify/{id}")
+	public String  questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult
+								, Principal principal, @PathVariable("id") Integer id) {			// 글 수정.
+		if (bindingResult.hasErrors()) {
+			return "question_form";
+		}
+		Question question = this.questionService.getQuestion(id);
+		if (!(question.getAuthor().getUsername().equals(principal.getName()))) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없음.");
+		}
+		this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+		return "redirect:/question/detail/" + id;			// return String.format(""redirect:/question/detail/%s", id);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/delete/{id}")
+	public String questionDelete(Principal principal, @PathVariable("id") Integer id) {			// 글 삭제.
+		Question question = this.questionService.getQuestion(id);
+		
+		if (!(question.getAuthor().getUsername().equals(principal.getName()))) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없음.");
+		}
+		this.questionService.delete(question);
+		return "redirect:/";
 	}
 }

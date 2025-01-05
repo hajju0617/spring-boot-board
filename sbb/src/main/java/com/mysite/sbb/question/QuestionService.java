@@ -50,4 +50,15 @@ public class QuestionService {
 		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));		// page : 조회할 페이지 번호, 10 : 한 페이지에 보여줄 데이터의 개수.
 		return this.questionRepository.findAll(pageable);
 	}
+	
+	public void modify(Question question, String subject, String content) {	// 글 수정.
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setModifyDate(LocalDateTime.now());
+		this.questionRepository.save(question);
+	}
+	
+	public void delete(Question question) {									// 글 삭제.
+		this.questionRepository.delete(question);
+	}
 }

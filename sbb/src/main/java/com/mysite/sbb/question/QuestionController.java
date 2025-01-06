@@ -79,7 +79,7 @@ public class QuestionController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/modify/{id}")
 	public String  questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult
-								, Principal principal, @PathVariable("id") Integer id) {			// 글 수정.
+								, Principal principal, @PathVariable("id") Integer id) {			// 글 수정 저장하기.
 		if (bindingResult.hasErrors()) {
 			return "question_form";
 		}

@@ -27,8 +27,11 @@
 	                    <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
 	                </div>
 	            </div>
-				<!--  질문 수정, 삭제 버튼&기능  -->
+				<!--  질문 추천, 수정, 삭제 버튼&기능  -->
 				<div class="my-3">
+					<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" th:data-uri="@{|/question/vote/${question.id}|}">추천
+						<span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+					</a>
 					<a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary" 
 					sec:authorize="isAuthenticated()" th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
 					th:text="수정">
@@ -62,8 +65,11 @@
 	                    <div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></div>
 	                </div>
 	            </div>
-				<!--  답변 수정, 삭제 버튼&기능.  -->
+				<!--  답변 추천, 수정, 삭제 버튼&기능.  -->
 				<div class="my-3">
+					<a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary" th:data-uri="@{|/answer/vote/${answer.id}|}">추천
+						<span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
+					</a>
 					<a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
 					sec:authorize="isAuthenticated()" th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
 					th:text="수정">
@@ -94,6 +100,14 @@
 	Array.from(delete_elements).forEach(function(element) {
 		element.addEventListener('click', function() {
 			if(confirm("정말로 삭제할까요?")) {
+				location.href = this.dataset.uri;
+			};
+		});
+	});
+	const recommend_elements = document.getElementsByClassName("recommend");
+	Array.from(recommend_elements).forEach(function(element) {
+		element.addEventListener('click', function() {
+			if(confirm("정말로 추천할까요?")) {
 				location.href = this.dataset.uri;
 			};
 		});

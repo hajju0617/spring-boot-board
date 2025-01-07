@@ -44,4 +44,9 @@ public class AnswerService {
 	public void delete(Answer answer) {												// 답변 삭제.
 		this.answerRepository.delete(answer);
 	}
+	
+	public void vote(Answer answer, SiteUser siteUser) {							// 답변 추천.
+		answer.getVoter().add(siteUser);
+		this.answerRepository.save(answer);
+	}
 }

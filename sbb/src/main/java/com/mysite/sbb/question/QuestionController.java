@@ -31,12 +31,14 @@ public class QuestionController {
 	private final UserService userService;
 	
 	@GetMapping("/list")
-	public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {	// 글 목록.
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page
+					, @RequestParam(value = "kw", defaultValue = "") String kw) {			// 글 목록. (kw : 검색 시 사용할 검색어)
 //		if (page < 1) {
 //			throw new IllegalArgumentException("페이지는 1보다 커야됨.");
 //		}
-		Page<Question> paging = this.questionService.getList(page);
+		Page<Question> paging = this.questionService.getList(page, kw);
 		model.addAttribute("paging", paging);						// Page 객체를 'paging'이름으로 모델에 저장.
+		model.addAttribute("keyWord", kw);
 		return "question_list";
 	}
 	

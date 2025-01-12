@@ -57,8 +57,9 @@ public class QuestionService {
 		List<Sort.Order> sorts = new ArrayList<>();
 		sorts.add(Sort.Order.desc("createDate"));							// Order by createDate DESC 역할.
 		Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));		// page : 조회할 페이지 번호, 10 : 한 페이지에 보여줄 데이터의 개수.
-		Specification<Question> specification = search(kw);
-		return this.questionRepository.findAll(specification, pageable);
+		return this.questionRepository.findAllByKeyword(kw, pageable);
+//		Specification<Question> specification = search(kw);
+//		return this.questionRepository.findAll(specification, pageable);
 	}
 	
 	public void modify(Question question, String subject, String content) {	// 글 수정.

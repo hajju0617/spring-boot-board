@@ -74,7 +74,9 @@
 		 		<input type="hidden" id="page" name="page" th:value="${paging.number}">
 		 </form>
 	</div>
+<!--  부모 템플릿(layout)의 th:block요소의 내용이 자식 템플릿(question_detail)의 script 내용으로 교체.  -->
 <script layout:fragment="script" type='text/javascript'>
+//  페이지 이동.
 const page_elements = document.getElementsByClassName("page-link");
 Array.from(page_elements).forEach(function(element) {
     element.addEventListener('click', function() {
@@ -82,6 +84,7 @@ Array.from(page_elements).forEach(function(element) {
         document.getElementById('searchForm').submit();
     });
 });
+// 검색 이벤트 처리.
 const btn_search = document.getElementById("btn_search");
 btn_search.addEventListener('click', function() {
     document.getElementById('kw').value = document.getElementById('search_kw').value;

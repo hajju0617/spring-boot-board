@@ -27,6 +27,20 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>{
 	// 검색.
 	Page<Question> findAll(Specification<Question> specification, Pageable pageable);
 	
+	// Specification 대신 @Query 에노테이션을 활용해서 검색 기능을 구현.	
+	@Query("SELECT distinct q "
+			+ "FROM Question q " 
+            + "LEFT OUTER JOIN SiteUser u1 ON q.author=u1 "
+            + "LEFT OUTER JOIN Answer a ON a.question=q "
+            + "LEFT OUTER JOIN SiteUser u2 ON a.author=u2 "
+            + "WHERE "
+            + "   q.subject LIKE %:kw% "
+            + "or q.content LIKE %:kw% "
+            + "or u1.username LIKE %:kw% "
+            + "or a.content LIKE %:kw% "
+            + "or u2.username LIKE %:kw% ")
+    Page<Question> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
+	
 	@Modifying
 	@Query("UPDATE Question q SET q.countView = q.countView + 1 WHERE q.id = :id")
 	@Transactional

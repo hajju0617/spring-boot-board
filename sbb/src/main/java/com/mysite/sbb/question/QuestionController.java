@@ -38,7 +38,7 @@ public class QuestionController {
 //		}
 		Page<Question> paging = this.questionService.getList(page, kw);
 		model.addAttribute("paging", paging);						// Page 객체를 'paging'이름으로 모델에 저장.
-		model.addAttribute("keyWord", kw);
+		model.addAttribute("keyWord", kw);							// kw를 model 객체에 keyWord라는 이름으로 저장.
 		return "question_list";
 	}
 	

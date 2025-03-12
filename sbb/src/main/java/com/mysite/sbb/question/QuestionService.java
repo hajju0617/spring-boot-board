@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+import com.mysite.sbb.question.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +20,9 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.mysite.sbb.DataNotFoundException;
-import com.mysite.sbb.user.SiteUser;
-import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.exception.DataNotFoundException;
+import com.mysite.sbb.user.entity.SiteUser;
+import com.mysite.sbb.answer.entity.Answer;
 
 import lombok.RequiredArgsConstructor;
 

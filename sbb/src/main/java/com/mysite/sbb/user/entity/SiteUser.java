@@ -1,4 +1,4 @@
-package com.mysite.sbb.user;
+package com.mysite.sbb.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

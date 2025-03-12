@@ -8,7 +8,8 @@
 			</div>
 		</div>
 		<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
-				<!--  @Valid 검증 실패 시 에러 메시지 (form_errors 템플릿 사용.)  -->
+
+			<!--  @Valid 검증 실패 시 에러 메시지 (form_errors 템플릿 사용.)  -->
 		        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
 				
 		        <div class="mb-3">
@@ -25,9 +26,43 @@
 		        </div>
 		        <div class="mb-3">
 		            <label for="email" class="form-label">이메일</label>
-		            <input type="email" th:field="*{email}" class="form-control">
+		            <input type="email" th:field="*{email}" id="emailInput" class="form-control">
+					<button type="button" id="sendCodeBtn" class="btn btn-secondary">인증 코드 전송</button>
 		        </div>
-		        <button type="submit" class="btn btn-primary">회원가입</button>
+				<div class="mb-3">
+					<label for="authNum" class="form-label">인증 코드</label>
+					<input type="text" id="authNumInput" class="form-control">
+					<button type="button" id="verifyCodeBtn" class="btn btn-success">인증 확인</button>
+					<span id="verificationMessage"></span>
+				</div>
+		        <button type="submit" id="signupBtn" class="btn btn-primary" disabled>회원가입</button>
 		</form>
 	</div>
 </html>
+<script>
+	document.getElementById("sendCodeBtn").addEventListener("click", function() {
+		const email = document.getElementById("emailInput").value;
+		fetch(`/email/verification?email=` + email, { method: "POST" })
+				.then(response => response.text())
+				.then(data => alert(data));
+	});
+
+	document.getElementById("verifyCodeBtn").addEventListener("click", function() {
+		var email = document.getElementById("emailInput").value;
+		var authNum = document.getElementById("authNumInput").value;
+		fetch(`/email/verification?email=` + email + `&authNum=` + authNum, { method: "GET" })
+				.then(response => response.text())
+				.then(data => {
+					if (data === 'true') {
+						document.getElementById("verificationMessage").innerText = "인증 성공";
+						document.getElementById("verificationMessage").style.color = "green";
+						document.getElementById("signupBtn").disabled = false;
+						alert("인증 성공")
+					} else {
+						document.getElementById("verificationMessage").innerText = "인증 실패";
+						document.getElementById("verificationMessage").style.color = "red";
+						alert("인증 실패")
+					}
+				});
+	});
+</script>

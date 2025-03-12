@@ -2,10 +2,11 @@ package com.mysite.sbb.user;
 
 import java.util.Optional;
 
+import com.mysite.sbb.user.entity.SiteUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mysite.sbb.DataNotFoundException;
+import com.mysite.sbb.exception.DataNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

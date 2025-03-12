@@ -1,8 +1,12 @@
-package com.mysite.sbb.user;
+package com.mysite.sbb.security;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.mysite.sbb.user.entity.SiteUser;
+import com.mysite.sbb.user.UserRepository;
+import com.mysite.sbb.user.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

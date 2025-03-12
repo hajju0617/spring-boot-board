@@ -2,6 +2,8 @@ package com.mysite.sbb.answer;
 
 import java.security.Principal;
 
+import com.mysite.sbb.answer.dto.AnswerForm;
+import com.mysite.sbb.answer.entity.Answer;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,9 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.mysite.sbb.question.Question;
+import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.QuestionService;
-import com.mysite.sbb.user.SiteUser;
+import com.mysite.sbb.user.entity.SiteUser;
 import com.mysite.sbb.user.UserService;
 
 import jakarta.validation.Valid;

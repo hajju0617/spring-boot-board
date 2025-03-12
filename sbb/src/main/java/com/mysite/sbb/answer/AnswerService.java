@@ -3,11 +3,12 @@ package com.mysite.sbb.answer;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.mysite.sbb.answer.entity.Answer;
 import org.springframework.stereotype.Service;
 
-import com.mysite.sbb.DataNotFoundException;
-import com.mysite.sbb.question.Question;
-import com.mysite.sbb.user.SiteUser;
+import com.mysite.sbb.exception.DataNotFoundException;
+import com.mysite.sbb.question.entity.Question;
+import com.mysite.sbb.user.entity.SiteUser;
 
 import lombok.RequiredArgsConstructor;
 

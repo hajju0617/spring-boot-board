@@ -1,5 +1,6 @@
 package com.mysite.sbb.user;
 
+import com.mysite.sbb.user.dto.UserCreateForm;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

@@ -1,4 +1,4 @@
-package com.mysite.sbb.question;
+package com.mysite.sbb.question.dto;
 
 
 import jakarta.validation.constraints.NotBlank;

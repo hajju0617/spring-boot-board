@@ -1,4 +1,4 @@
-package com.mysite.sbb.answer;
+package com.mysite.sbb.answer.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

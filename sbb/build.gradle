@@ -18,6 +18,11 @@ repositories {
 }
 
 dependencies {
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.5'
+	implementation 'javax.mail:javax.mail-api:1.6.2'
+
+	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

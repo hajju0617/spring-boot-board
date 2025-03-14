@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -23,11 +25,12 @@ public class SecurityConfig {
 		httpSecurity.authorizeHttpRequests(
 				(authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()	// 로그인하지 않아도 모든 페이지에 접근 가능. (AntPathRequestMatcher는 특정 URL에 대한 요청을 매칭하는 데 사용.)
 																																	// (/** : 루트 경로 하위의 모든 경로에 매칭, /* : 루트 경로 바로 아래만의 경로만.)
-				
-				).csrf((csrf) -> csrf.disable())
-//						.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))			// h2-console로 시작하는 모든 URL은 CSRF 검증하지 않음.
-////						.ignoringRequestMatchers(new AntPathRequestMatcher("/verification")))
-//				)
+
+				).csrf((csrf) -> csrf
+								.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+						.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))			// h2-console로 시작하는 모든 URL은 CSRF 검증하지 않음.
+//						.ignoringRequestMatchers(new AntPathRequestMatcher("/verification")))
+				)
 		
 				.headers((headers) -> headers
 						.addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))		// 프레임 구조로 되어 있는 H2 허락.

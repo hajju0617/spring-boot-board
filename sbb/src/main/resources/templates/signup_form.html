@@ -1,5 +1,12 @@
 <!--  layout 템플릿 상속 받음.  -->
 <html layout:decorate="~{layout}">
+  부모 템플릿(layout)의 th:block요소의 내용이 자식 템플릿(signup_form)의 내용으로 교체.
+<!--	<th:block layout:fragment="head">-->
+<!--		&lt;!&ndash;  csrf 토큰  &ndash;&gt;-->
+<!--		<meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--		&lt;!&ndash;  csrf 헤더  &ndash;&gt;-->
+<!--		<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+<!--	</th:block>-->
 	<!--  부모 템플릿(layout)의 th:block요소의 내용이 자식 템플릿(signup_form)의 div 요소의 내용으로 교체.  -->
 	<div layout:fragment="content" class="container my-3">
 		<div class="my-3" border-bottom>
@@ -42,7 +49,22 @@
 <script>
 	document.getElementById("sendCodeBtn").addEventListener("click", function() {
 		const email = document.getElementById("emailInput").value;
-		fetch(`/email/verification?email=` + email, { method: "POST" })
+
+		// const csrfToken = document.querySelector("meta[name='_csrf']").content;
+		// const csrfHeader = document.querySelector("meta[name='_csrf_header']").content;
+		const csrfToken = document.cookie.split('; ')
+				.find(row => row.startsWith('XSRF-TOKEN='))
+				.split('=')[1];
+		console.log("CSRF Token from Cookie:", csrfToken);
+
+		fetch(`/email/verification?email=` + email, { method: "POST",
+			// headers: {
+			// 	[csrfHeader]: csrfToken // CSRF 토큰 추가
+			// }
+			headers: {
+				'X-XSRF-TOKEN': csrfToken  // CSRF 토큰을 헤더에 추가
+			}
+			})
 				.then(response => response.text())
 				.then(data => alert(data));
 	});

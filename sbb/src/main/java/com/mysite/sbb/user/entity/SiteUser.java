@@ -5,11 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 public class SiteUser {
 	@Id
@@ -22,5 +22,19 @@ public class SiteUser {
 	private String password;
 	
 	@Column(unique = true)
-	private String email;	
+	private String email;
+
+	public SiteUser() {
+
+	}
+
+	public SiteUser(String username, String password, String email) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
+
+	public static SiteUser dtoToEntity(String username, String password, String email) {
+		return new SiteUser(username, password, email);
+	}
 }

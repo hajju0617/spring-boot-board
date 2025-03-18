@@ -1,5 +1,6 @@
 package com.mysite.sbb.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration										// 해당 파일이 스프링의 환경 설정 파일임을 선언.
 @EnableWebSecurity									// 모든 요청 URL이 시큐리티의 제어를 받도록 만듦.
 @EnableMethodSecurity(prePostEnabled = true)		// @PreAuthorize에노테이션이 정상적으로 동작할 수 있도록
+@RequiredArgsConstructor
 public class SecurityConfig {
+	private final UserSecurityService userSecurityService;
+
 	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -27,9 +31,8 @@ public class SecurityConfig {
 																																	// (/** : 루트 경로 하위의 모든 경로에 매칭, /* : 루트 경로 바로 아래만의 경로만.)
 
 				).csrf((csrf) -> csrf
-								.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//								.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 						.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))			// h2-console로 시작하는 모든 URL은 CSRF 검증하지 않음.
-//						.ignoringRequestMatchers(new AntPathRequestMatcher("/verification")))
 				)
 		
 				.headers((headers) -> headers
@@ -39,7 +42,9 @@ public class SecurityConfig {
 						.loginPage("/user/login").defaultSuccessUrl("/"))		// .formLogin 메서드는 시큐리티의 로그인 설정을 담당.
 				
 				.logout((logout) -> logout										// logout() 메서드는 시큐리티의 로그아웃 설정을 담당.
-						.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID"));
+						.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID", "remember-me"))
+				.rememberMe((rememberMe) -> rememberMe.key("uniqueAndSecretKey").rememberMeCookieName("rememberUser").tokenValiditySeconds(604800).userDetailsService(userSecurityService));
+																													 // tokenValiditySeconds : '초' 단위.
 		return httpSecurity.build();
 	}
 	

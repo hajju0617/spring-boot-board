@@ -17,10 +17,8 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;			// 빈으로 등록한 PasswordEncoder 객체를 주입받아 사용.
 	
 	public SiteUser create(String username, String password, String email) {		// 회원가입.
-		SiteUser user = new SiteUser();
-		user.setUsername(username);
-		user.setPassword(passwordEncoder.encode(password));
-		user.setEmail(email);
+		String hashPassword = passwordEncoder.encode(password);
+		SiteUser user = SiteUser.dtoToEntity(username, hashPassword, email);
 		this.userRepository.save(user);
 		return user;
 	}

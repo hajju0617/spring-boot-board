@@ -11,10 +11,12 @@ import java.util.Properties;
 @Configuration
 public class MailConfig {
 
-//    @Value("${spring.mail.username}")
-//    String username;
-//    @Value("${spring.mail.password}")
-//    String password;
+    @Value("${spring.mail.username}")
+    String username;
+    @Value("${spring.mail.password}")
+    String password;
+
+
 
     @Bean
     public JavaMailSender mailSender() {
@@ -22,8 +24,8 @@ public class MailConfig {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.naver.com");
         mailSender.setPort(465);
-        mailSender.setUsername("hajju0617");
-        mailSender.setPassword("dlatlqlqjs123!");
+        mailSender.setUsername(username);
+        mailSender.setPassword(password);
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.transport.protocol", "smtp");

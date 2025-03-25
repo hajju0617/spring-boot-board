@@ -46,11 +46,7 @@ public class QuestionService {
 	}
 	
 	public void create(String subject, String content, SiteUser user) {				// 글 작성.		
-		Question question = new Question();
-		question.setSubject(subject);
-		question.setContent(content);
-		question.setAuthor(user);
-		question.setCreateDate(LocalDateTime.now());
+		Question question = Question.dtoToQuestionEntity(subject, content, user);
 		this.questionRepository.save(question);
 	}
 	
@@ -64,10 +60,8 @@ public class QuestionService {
 	}
 	
 	public void modify(Question question, String subject, String content) {	// 글 수정.
-		question.setSubject(subject);
-		question.setContent(content);
-		question.setModifyDate(LocalDateTime.now());
-		this.questionRepository.save(question);
+		Question patchQuestion = Question.patchQuestion(question, subject, content);
+		this.questionRepository.save(patchQuestion);
 	}
 	
 	public void delete(Question question) {									// 글 삭제.

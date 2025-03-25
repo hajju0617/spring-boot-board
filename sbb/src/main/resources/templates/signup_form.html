@@ -58,6 +58,7 @@
 		console.log("CSRF Token from Cookie:", csrfToken);
 
 		fetch(`/email/verification?email=` + email, { method: "POST",
+			// credentials: 'include',
 			headers: {
 				[csrfHeader]: csrfToken // CSRF 토큰 추가
 			}

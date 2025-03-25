@@ -18,7 +18,7 @@ public class UserService {
 	
 	public SiteUser create(String username, String password, String email) {		// 회원가입.
 		String hashPassword = passwordEncoder.encode(password);
-		SiteUser user = SiteUser.dtoToEntity(username, hashPassword, email);
+		SiteUser user = SiteUser.dtoToUserEntity(username, hashPassword, email);
 		this.userRepository.save(user);
 		return user;
 	}

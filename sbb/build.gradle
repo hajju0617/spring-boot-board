@@ -18,6 +18,10 @@ repositories {
 }
 
 dependencies {
+	// db설정.
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// env, mail 설정.
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.5'
 	implementation 'javax.mail:javax.mail-api:1.6.2'

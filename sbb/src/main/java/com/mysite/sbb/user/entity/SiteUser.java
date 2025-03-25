@@ -5,9 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Entity
@@ -34,7 +32,7 @@ public class SiteUser {
 		this.email = email;
 	}
 
-	public static SiteUser dtoToEntity(String username, String password, String email) {
+	public static SiteUser dtoToUserEntity(String username, String password, String email) {
 		return new SiteUser(username, password, email);
 	}
 }

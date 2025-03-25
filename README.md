@@ -14,4 +14,6 @@
   - Bootstrap
 - DB
   - H2
-- IDE : STS
+- IDE : STS -> IntelliJ
+
+![Image](https://github.com/user-attachments/assets/a17474cb-237e-4e47-9039-ab3ae61625c3)

@@ -48,7 +48,11 @@ public class AnswerService {
 	}
 	
 	public void vote(Answer answer, SiteUser siteUser) {							// 답변 추천.
-		answer.getVoter().add(siteUser);
+		if (answer.getVoter().contains(siteUser)) {
+			answer.getVoter().remove(siteUser);
+		} else {
+			answer.getVoter().add(siteUser);
+		}
 		this.answerRepository.save(answer);
 	}
 }
